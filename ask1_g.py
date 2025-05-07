@@ -1,4 +1,4 @@
-"""min Z = x1 + C2x2
+"""max  Z =c1x1 + c2x2
 όταν
 (Π1) 6x1 + 3x2 ≥12
 (Π2) 4x1 + 8x2 ≥16
@@ -46,7 +46,9 @@ def plot_constraints():
                     where=mask, 
                     color='green', alpha=0.5)
     #plot max and min gradient vector
-
+    """
+    (P1) 6x1 + 3x2 ≥12
+    (P2) 4x1 + 8x2 ≥16"""
     P1_gradient =  -np.array([6, 3])
     P2_gradient = -np.array([4, 8])
     origin = np.array([0, 0])
@@ -59,19 +61,33 @@ def plot_constraints():
     
     #plt.quiver(*origin, *gradient_vector, angles='xy', scale_units='xy', scale=1, color='red', label='Gradient Vector')
     
-    Z0 = 3
-    x2_line = Z0  -2 * x1
-    plt.plot(x1, x2_line, label='Z0 = x1 + 2x2', color='turquoise')
-    Z0 = 3
-    x2_line2 = Z0 - 0.5 * x1
-    plt.plot(x1, x2_line2, label='Z0 = x1  +0.5x2', color='black')   
-    Z0 = 3
-    x2_line3 = Z0 - 3 * x1
-    plt.plot(x1, x2_line3, label='Z0 = x1 + 3x2', color='grey')   
-    Z0 = 3
-    x2_line4 = Z0 - 1 * x1
-    plt.plot(x1, x2_line4, label='Z0 = x1 + 1x2', color='pink')   
+    ## arbitrary line Z0 = C1x1 + -
+    def get_line(C1, C2, Z0):
+        
+        return (Z0 - C1 * x1) / C2
+    
+    
+    
+    x2_line = get_line(6, 7, 35)
+    plt.plot(x1, x2_line, label='Z0 = 6x1+7x2', color='turquoise')
+    
+    x2_line2 = get_line(6, 5, 35)
+    plt.plot(x1, x2_line2, label='Z0 = 6x1 +5x2', color='black')   
+    
+    x2_line3 = get_line(7,5, 35)
+    plt.plot(x1, x2_line3, label='Z0 =7x1 +5x2', color='grey')   
+    
+    x2_line4 =  get_line(5,7, 35)
+    plt.plot(x1, x2_line4, label='Z0 =5x1 +7x2 ', color='pink')   
+    
+    
+
+
+
+
+
     plt.xlim(0, 10)
+
     plt.ylim(0, 10)
     plt.xlabel('x1')
     plt.ylabel('x2')
@@ -84,20 +100,22 @@ def plot_constraints():
 
 if __name__ == "__main__":
     plot_constraints()
-   # To solve b) we need to find the intersection of the lines defined by constraints Π1 and Π2
-    # 6x1 + 3x2 = 12 (Π1)
-    # 4x1 + 8x2 = 16 (Π2)
+    # To solve b) we need to find the intersection of the lines defined by constraints Π1 and Π2
+    #(Π3) 6x1 + 5x2 ≤30
+    #(Π4) 6x1 + 7x2 ≤36
     # in slope-intercept form:
-    # x2 = -2x1 + 4 (Π1)
-    # x2 = -0.5x1 + 2 (Π2)
+    # x2 = -6/5x1 + 4 (Π1)
+    # x2 = -6/7 x1 + 2 (Π2)
     #slopes:
-    # p1 = -2
-    # p2 = -0.5
-    # Graphically, we can find the intersection point of these two lines.
-    #it is 1.33333 1.333333 both repeating
-    # the gradient vector now is [1, C2] 
+    # p1 = -6/5
+    # p2 = -6/7
+    
+    # the gradient vector now is [C1, C2] 
     # it must be contained by the vectors of P1 P2 in the following fasion
-    # -1/2 < -1/C2 < -1/0.5    
-    # 0.5 < C2 < 2
-    # 0.5 < C2 < 2
- 
+    # -6/5 < -C1/C2 < -6/7   =>  6/5 > C1/C2 > 6/7
+    
+
+    print("the maxixmum is at the intersection of C3 and C4")
+    print("x1 = 2.5, x2 = 3")
+    
+    print(f"Z ={2.5*3+3} ")
